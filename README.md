@@ -1,50 +1,98 @@
-# Youtube-dl-mp4
+# `youtube-dl-mp4`
 
-This script will download the best video quality, audio quality, and a thumbnail from a 
-youtube video url that you provide than combine them together using ffmpeg.
-I have tested this script on some debian based operating systems with the sudo command enabled
-and with my user being a part of the sudo group.
+**This script has been tested on `Debian 10`**
 
-___
+This script will download the best quality audio, video and thumbnail, using `youtube-dl`, from a YouTube video URL that you provide; combine them together using `ffmpeg` into an mp4 video with mp3 audio and the same thumbnail as the YouTube Video provided.
 
-## Packages that are required for this script to work:
-1. Prerequesetion:
-	1. Python 2.x or 3.x :
+## TLDR
 
-			sudo apt install python
+`youtube-dl-mp4` + `YouTube URL` = `mp4 Video` with a YouTube thumbnail in a folder*
+
+## Requirements
+
+### All requirements
+
+```sh
+sudo apt install ffmpeg curl atomicparsley python
+```
+
+### Each project
+
+1. [`python`](https://www.python.org/)
+
+	For `youtube-dl`
+
+	```sh
+	sudo apt install python
+	```
+
+2. [`curl`](https://github.com/curl/curl)
+
+	To download the script.
+
+	```sh
+	sudo apt install -y curl
+	```
+
+3. [`youtube-dl`](http://ytdl-org.github.io/youtube-dl/download.html) 
+
+	To download the youtube videos
+
+	```sh
+	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+	sudo chmod a+rx /usr/local/bin/youtube-dl
+	```
+
+4. [`atomicparsley`](https://github.com/wez/atomicparsley) 
+
+	To add the thumbnail into the video.
+
+	```sh
+	sudo apt install -y atomicparsley
+	```
+
+5. [`ffmpeg`](https://github.com/FFmpeg/FFmpeg)
+
+	To transcode the video into mp4, the audio into mp3, and to combine them
 	
-	2. Curl ( To download the script. ) :
-	
-			sudo apt install -y curl
-
-2. youtube-dl ( To download the youtube videos. ) [youtube-dl original website](http://ytdl-org.github.io/youtube-dl/download.html):
-
-		sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl; sudo chmod a+rx /usr/local/bin/youtube-dl
-
-3. atomicparsley ( to combine the thumbnail into the video. ):
-
-		sudo apt install -y atomicparsley
-
-4. ffmpeg ( to transcode the video into mp4, the audio into mp3, and to combine them. ):
-
-		sudo apt install -y ffmpeg
-
-___
+	```sh
+	sudo apt install -y ffmpeg
+	```
 
 ## How does the script work?
 
-you will need to put this script in a folder that is listed in your PATH variable or symbolically link this script to
-a folder that is listed in your PATH variable.
-
-1. download this script to a folder and symbolically link it to a folder listed in the PATH variable( `/usr/local/bin` is probably going to be listed in your PATH variable ).
-
-		mkdir ~/script
-		wget https://raw.githubusercontent.com/diyaa59/youtube-dl-mp4/master/youtube-dl-mp4 -P ~/script
-		sudo chmod 750 ~/script/youtube-dl-mp4
-		sudo ln -s ~/script/youtube-dl-mp4 /usr/local/bin
+You can either:    
+1. Put this script in a folder that is included your `PATH`
+	- Download the script and set permissions
 		
-2. just run the script and give it the URL of the video in the first argument.
+		```sh
+		sudo curl -L https://raw.githubusercontent.com/diyaa59/youtube-dl-mp4/master -o /usr/local/bin/youtube-dl-mp4
 
-		youtube-dl-mp4 <video_URL>
+		sudo chmod a+rx /usr/local/bin/youtube-dl-mp4
+		```
+
+2. Symlink this script into a folder that is included your `PATH`
+ie. `/usr/local/bin`
+
+	- Make a directory, download the script and set the correct permissions
+	
+		```sh
+		mkdir ~/script
+		
+		wget https://raw.githubusercontent.com/diyaa59/youtube-dl-mp4/master youtube-dl-mp4 -P ~/script
+		
+		sudo chmod a+rx ~/script/youtube-dl-mp4
+		```
+	- Symlink the script to `/usr/local/bin` so it is included in the `PATH` variable
+	
+		```sh
+		sudo ln -s ~/script/youtube-dl-mp4 /usr/local/bin
+		```
+		
+3. Run the script and give it a URL of a video as the first argument
+
+	```sh
+	youtube-dl-mp4 https://www.youtube.com/watch?v=dQw4w9WgXcQ
+	```
 
 ___
