@@ -1,9 +1,32 @@
 #!/bin/bash
+
+# establish variables required
 url=$1
-title=$(youtube-dl $url --get-title)
+# youtube-dl to get video title
+title=$(youtube-dl "$url" --get-title)
+
+# Replace?
 title1=${title// /_}
+
+# Store original location
 original_location=$(pwd)
-mkdir $(pwd)/$title1
-cd $title1
-youtube-dl -r 10M -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --embed-thumbnail --add-metadata -o '%(title)s.%(ext)s' $url
-cd $original_location
+
+# Make dir to put converted files into
+mkdir "$(pwd)"/"$title1"
+
+# change to "$title1" directory
+cd "$title1" || exit
+
+# Download the video into "PWD/$title1 "
+youtube-dl -r 10M -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --embed-thumbnail --add-metadata -o '%(title)s.%(ext)s' "$url"
+
+# time to exit
+cd "$original_location" || exit
+
+# prints 
+# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# TITLE W/O UNDERSCORES Downloaded!
+# You can find the converted files in $original_location/$title1/
+# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+# to the terminal
+printf "%s Downloaded! \nYou can find the converted files in %s/%s/" "$title" "$original_location" "$title1"
