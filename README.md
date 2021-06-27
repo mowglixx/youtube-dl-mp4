@@ -86,29 +86,29 @@ You can Download the script through the following steps:
 2. Symbolically link this script into a directory that is included in your `PATH` variable
 ie. `/usr/local/bin`
 	
-		```bash
-		sudo ln -s ~/script/youtube-dl-mp4-mp3/youtube-dl-mp4-mp3 /usr/local/bin
-		```
+	```bash
+	sudo ln -s ~/script/youtube-dl-mp4-mp3/youtube-dl-mp4-mp3 /usr/local/bin
+	```
 
 ### To use the script:
 
 Run the script and give it the required argument.
 
-	```bash
-	youtube-dl-mp4-mp3 <URL> <download option>
-	```
-	```txt
-	<download option> can be either
-	1. mp3-single : Download a single audio file out of a URL you provide even if the URL links to a playlist.
-	2. mp3-list: Download a full playlist from youtube (as long as you provide the playlist URL and NOT the URL of a single video)
-	3. mp4: Download a video in the highest available video quality, and the highest available audio quality.
-	```
+```bash
+youtube-dl-mp4-mp3 <URL> <download option>
+```
+```txt
+<download option> can be either
+1. mp3-single : Download a single audio file out of a URL you provide even if the URL links to a playlist.
+2. mp3-list: Download a full playlist from youtube (as long as you provide the playlist URL and NOT the URL of a single video)
+3. mp4: Download a video in the highest available video quality, and the highest available audio quality.
+```
 ___
 ### To update the script:
 
 To update the script you would need to run the following commands:
 
-	```bash
-	cd ~/script/youtube-dl-mp4-mp3
-	git pull
-	```
+```bash
+cd ~/script/youtube-dl-mp4-mp3
+git pull
+```
