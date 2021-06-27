@@ -1,5 +1,7 @@
-# Enhanced to deliever new features :)
 #!/bin/bash
+jghflsdkjhfldskjhflkjsdhflkj
+# Enhanced to deliever new features :)
+
 << 'MULTILINE-COMMENT'
 here is what the options -cwixrfU parameters mean in the youtube-dl script
 c: --continue
@@ -10,12 +12,15 @@ r: --rate-limit
 f: --format
 U: --update
 MULTILINE-COMMENT
+
 url=$1
 type=$2
+
 << 'MULTILINE-COMMENT'
 in case the second argument provided to the script is `mp3-single`, the following if statement will be called
 ,otherwise it will be ignored and the script will move to the next condition!
 MULTILINE-COMMENT
+
 if [[ $type = 'mp3-single' ]]; then
     title=$(youtube-dl $url --get-title)
     title1=${title// /_}
@@ -27,10 +32,13 @@ if [[ $type = 'mp3-single' ]]; then
     cd $original_location
     echo " the mp3 file has been downloaded to" $title_name "directory."
     exit 1
+
 << 'MULTILINE-COMMENT'
-in case the second argument provided to the script is `mp3-list`, the following if statement will be called
-,otherwise it will be ignored and the script will move to the next condition!
+    in case the second argument provided to the script is `mp3-list`, 
+    the following if statement will be called ,otherwise it will be 
+    ignored and the script will move to the next condition!
 MULTILINE-COMMENT
+
 elif [[ $type = 'mp3-list' ]]; then
     title=$(date +'%D_%H_%M')'_mp3_list'
     title1=${title//'/'/_}
@@ -42,10 +50,13 @@ elif [[ $type = 'mp3-list' ]]; then
     cd $original_location
     echo " the mp3 list has been downloaded to " $title "directory"
     exit 1
+
 << 'MULTILINE-COMMENT'
+
 in case the second argument provided to the script is `mp4`, the following if statement will be called
 ,otherwise it will be ignored and the script will move to the next condition!
 MULTILINE-COMMENT
+
 elif [[ $type = 'mp4' ]]; then
     title=$(youtube-dl $url --get-title)
     title1=${title// /_}
