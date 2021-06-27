@@ -1,32 +1,26 @@
 #!/bin/bash
 
-# establish variables required
+# establish video url as variable to be used in the script.
 url=$1
-# youtube-dl to get video title
+# request youtube-dl to get video title and store it in a variable named title!
 title=$(youtube-dl "$url" --get-title)
 
-# Replace?
+# Replace spaces in title of the video name so that the mkdir won't have diffeculty making the directory!
 title1=${title// /_}
 
-# Store original location
+# Store original location for later use!
 original_location=$(pwd)
 
-# Make dir to put converted files into
-mkdir "$(pwd)"/"$title1"
+# Make a directory for the video.
+mkdir $(pwd)/$title1
 
-# change to "$title1" directory
-cd "$title1" || exit
+# change directory into the directory stored in the string $title1!
+cd $title1
 
-# Download the video into "PWD/$title1 "
-youtube-dl -r 10M -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --embed-thumbnail --add-metadata -o '%(title)s.%(ext)s' "$url"
+# Download the video into "PWD/$title1 
+youtube-dl -r 10M -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --embed-thumbnail --add-metadata -o '%(title)s.%(ext)s' $url
 
-# time to exit
-cd "$original_location" || exit
+# time to get back to original location in case the user runs the script again!
+cd $original_location
 
-# prints 
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# TITLE W/O UNDERSCORES Downloaded!
-# You can find the converted files in $original_location/$title1/
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# to the terminal
-printf "%s Downloaded! \nYou can find the converted files in %s/%s/" "$title" "$original_location" "$title1"
+echo 'You can find your video in' $title1
