@@ -13,7 +13,7 @@ This script will download the best quality audio, video and thumbnail, using `yo
 ### All requirements
 
 ```sh
-sudo apt install ffmpeg curl atomicparsley python
+sudo apt install -y ffmpeg curl atomicparsley python
 ```
 
 ### Each project
@@ -23,7 +23,7 @@ sudo apt install ffmpeg curl atomicparsley python
 	For `youtube-dl`
 
 	```sh
-	sudo apt install python
+	sudo apt install -y python
 	```
 
 2. [`curl`](https://github.com/curl/curl)
@@ -66,30 +66,22 @@ You can either:
 	- Download the script and set permissions
 		
 		```sh
-		sudo curl -L https://raw.githubusercontent.com/diyaa59/youtube-dl-mp4/master -o /usr/local/bin/youtube-dl-mp4
+		mkdir ~/script
+		
+		sudo curl -L https://raw.githubusercontent.com/diyaa59/youtube-dl-mp4/master/youtube-dl-mp4 -o ~/script/youtube-dl-mp4
 
-		sudo chmod a+rx /usr/local/bin/youtube-dl-mp4
+		sudo chmod 750 ~/script/youtube-dl-mp4
 		```
 
 2. Symlink this script into a folder that is included your `PATH`
 ie. `/usr/local/bin`
-
-	- Make a directory, download the script and set the correct permissions
-	
-		```sh
-		mkdir ~/script
-		
-		wget https://raw.githubusercontent.com/diyaa59/youtube-dl-mp4/master youtube-dl-mp4 -P ~/script
-		
-		sudo chmod a+rx ~/script/youtube-dl-mp4
-		```
 	- Symlink the script to `/usr/local/bin` so it is included in the `PATH` variable
 	
 		```sh
 		sudo ln -s ~/script/youtube-dl-mp4 /usr/local/bin
 		```
 		
-3. Run the script and give it a URL of a video as the first argument
+3. Run the script and give it a URL of a video as the first argument.
 
 	```sh
 	youtube-dl-mp4 https://www.youtube.com/watch?v=dQw4w9WgXcQ
