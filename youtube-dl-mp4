@@ -1,26 +1,64 @@
 #!/bin/bash
-
-# establish video url as variable to be used in the script.
+<< 'MULTILINE-COMMENT'
+here is what the options -cwixrfU parameters mean in the youtube-dl script
+c: --continue
+w: --no-overwrites
+i: --ignore-errors
+x: --extract-audio
+r: --rate-limit
+f: --format
+U: --update
+MULTILINE-COMMENT
 url=$1
-# request youtube-dl to get video title and store it in a variable named title!
-title=$(youtube-dl "$url" --get-title)
-
-# Replace spaces in title of the video name so that the mkdir won't have diffeculty making the directory!
-title1=${title// /_}
-
-# Store original location for later use!
-original_location=$(pwd)
-
-# Make a directory for the video.
-mkdir $(pwd)/$title1
-
-# change directory into the directory stored in the string $title1!
-cd $title1
-
-# Download the video into "PWD/$title1 
-youtube-dl -r 10M -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --embed-thumbnail --add-metadata -o '%(title)s.%(ext)s' $url
-
-# time to get back to original location in case the user runs the script again!
-cd $original_location
-
-echo 'You can find your video in' $title1
+type=$2
+<< 'MULTILINE-COMMENT'
+in case the second argument provided to the script is `mp3-single`, the following if statement will be called
+,otherwise it will be ignored and the script will move to the next condition!
+MULTILINE-COMMENT
+if [[ $type = 'mp3-single' ]]; then
+    title=$(youtube-dl $url --get-title)
+    title1=${title// /_}
+    title_name=$title1'_audio'
+    original_location=$(pwd)
+    mkdir $(pwd)/$title_name
+    cd $title1
+    youtube-dl -cwix -r 10M --no-playlist -f "bestaudio/best" -o "%(title)s.%(ext)s" --audio-quality 0 --audio-format mp3  $url
+    cd $original_location
+    echo " the mp3 file has been downloaded to" $title_name "directory."
+    exit 1
+<< 'MULTILINE-COMMENT'
+in case the second argument provided to the script is `mp3-list`, the following if statement will be called
+,otherwise it will be ignored and the script will move to the next condition!
+MULTILINE-COMMENT
+elif [[ $type = 'mp3-list' ]]; then
+    title=$(date +'%D_%H_%M')'_mp3_list'
+    title1=${title//'/'/_}
+    title2=${title//':'/_}
+    original_location=$(pwd)
+    mkdir $(pwd)/$title2
+    cd $title
+    youtube-dl -cwix -r 10M -f "bestaudio/best" --yes-playlist -ciw -o "%(title)s.%(ext)s" --audio-quality 0 --audio-format mp3  $url
+    cd $original_location
+    echo " the mp3 list has been downloaded to " $title "directory"
+    exit 1
+<< 'MULTILINE-COMMENT'
+in case the second argument provided to the script is `mp4`, the following if statement will be called
+,otherwise it will be ignored and the script will move to the next condition!
+MULTILINE-COMMENT
+elif [[ $type = 'mp4' ]]; then
+    title=$(youtube-dl $url --get-title)
+    title1=${title// /_}
+    #if the user runs the script and downloads an audio (mp3 only) of a youtube video. The script will create a folder with the title of the youtube video preventing
+    #the script from running again and downloading a video into a folder with the same youtube video title name.
+    title_name=$title1'_video'
+    original_location=$(pwd)
+    mkdir $(pwd)/$title_name
+    cd $title1
+    youtube-dl -cwi -r 10M -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 --embed-thumbnail --add-metadata -o '%(title)s.%(ext)s' $url
+    cd $original_location
+    echo " the video has been downloaded to " $title_name "directory"
+    exit 1
+else
+    echo "The second argument that was given the script is invaled. Please check your input!"
+    exit 1
+fi
