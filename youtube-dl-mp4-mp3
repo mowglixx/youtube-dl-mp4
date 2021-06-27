@@ -19,7 +19,7 @@ MULTILINE-COMMENT
 if [[ $type = 'mp3-single' ]]; then
     title=$(youtube-dl $url --get-title)
     title1=${title// /_}
-    title_name=$title1'_audio'.,mnf;s,nf;sknf;klsdj;fkljd
+    title_name=$title1'_audio'
     original_location=$(pwd)
     mkdir $(pwd)/$title_name
     cd $title1
